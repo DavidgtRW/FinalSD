@@ -9,10 +9,10 @@ import { Libro } from 'src/model/libro';
 export class LibrosComponent implements OnInit {
 
   librosList: Libro [] = [
-    new Libro('1', 'libro1'),
-    new Libro('2', 'libro2'),
-    new Libro('3', 'libro3'),
-    new Libro('4', 'libro4')
+    new Libro('1', 'libro1', 3, 3),
+    new Libro('2', 'libro2', 4, 4),
+    new Libro('3', 'libro3', 2, 2),
+    new Libro('4', 'libro4', 1, 1)
   ];
 
   constructor() { }

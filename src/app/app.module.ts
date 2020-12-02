@@ -8,13 +8,19 @@ import { InicioComponent } from './inicio/inicio.component';
 import { LibrosComponent } from './libros/libros.component';
 import { RevistasComponent } from './revistas/revistas.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MenuSuperiorComponent } from './menu-superior/menu-superior.component';
+import { MiembrosPersonalComponent } from './miembros/miembros-personal/miembros-personal.component';
+import { MiembrosBibliotecaComponent } from './miembros/miembros-biblioteca/miembros-biblioteca.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InicioComponent,
     LibrosComponent,
-    RevistasComponent
+    RevistasComponent,
+    MenuSuperiorComponent,
+    MiembrosPersonalComponent,
+    MiembrosBibliotecaComponent
   ],
   imports: [
     BrowserModule,
