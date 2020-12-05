@@ -1,12 +1,12 @@
 export class Libro {
 
-    public idLibro: string;
+    public _id: string;
     public nombre: string;
     public copias: number;
     public copiasDisponibles: number;
 
-    constructor(idLibro: string, nombre: string, copias: number, copiasDisponibles: number){
-        this.idLibro = idLibro,
+    constructor(id: string, nombre: string, copias: number, copiasDisponibles: number){
+        this._id = id,
         this.nombre = nombre,
         this.copias = copias,
         this.copiasDisponibles = copiasDisponibles;

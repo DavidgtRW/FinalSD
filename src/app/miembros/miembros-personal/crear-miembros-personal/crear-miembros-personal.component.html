@@ -1,0 +1,34 @@
+<div class="modals d-block">
+    <div class="background-popup"></div>
+    <div class="pop-up coord-modal-full px-5 py-4 modal-scroll">
+        <div class="modal-header color-red">
+            <h5 class="modal-title font-white">Crear Miembro Personal</h5>
+            <div>
+                <button backHistory type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times font-white" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+        <form (ngSubmit)="guardarMiembro()" #coleccionForm="ngForm" autocomplete="off">
+
+            <div class="row pb-5 top-buffer">
+                <div class="col">
+                    <label class="semibold"> Nombre Miembro Personal</label>
+                    <input type="text" class="form-control input-small" placeholder="Escriba nombre miembro personal" required
+                        name="nombreRevista" [(ngModel)]="miembro.nombre">
+                </div>
+            </div>
+
+            <div class="row mt-3 mb-5">
+
+                <div class="col">
+                  <button type="submit" class="btn btn-primary btn-block " [disabled]="coleccionForm.form.invalid">Guardar</button>
+                </div>
+                <div class="col">
+                  <button backHistory type="button" class="btn btn-danger btn-block " (click)="nuevoMiembro()">Cancelar</button>
+                </div>
+              </div>
+        </form>
+    </div>
+</div>

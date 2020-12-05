@@ -1,23 +1,81 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Revista } from 'src/model/revista';
+import { BibliotecaService } from '../service/biblioteca.service';
+import { ConfiguracionAccionsService } from '../service/configuracion-accions.service';
+import { UtilsService } from '../service/utils.service';
 
 @Component({
   selector: 'app-revistas',
   templateUrl: './revistas.component.html',
   styleUrls: ['./revistas.component.css']
 })
-export class RevistasComponent implements OnInit {
+export class RevistasComponent implements OnInit, OnDestroy {
 
-  revistasList: Revista [] = [
-    new Revista('1', 'revista1', 3, 3),
-    new Revista('2', 'revista2', 4, 4),
-    new Revista('3', 'revista3', 2, 2),
-    new Revista('4', 'revista4', 1, 1)
-  ];
+  private suscripcion: Subscription = new Subscription();
+  
+  revistasList: Revista [] = [];
 
-  constructor() { }
+  constructor(
+    private utilService: UtilsService,
+    private bibliotecaService: BibliotecaService,
+    private configuracionAccionService: ConfiguracionAccionsService,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
+
+    this.cargarRevistas();
+    this.suscripcion = this.configuracionAccionService.revistaActual.subscribe((result) => {
+      console.log(result);
+      if (result) {
+        this.cargarRevistas();
+        this.configuracionAccionService.actualizarListaRevistas(false);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.suscripcion.unsubscribe();
+  }
+
+  cargarRevistas(){
+    this.revistasList = [];
+    this.bibliotecaService.getServices("revistas")
+      .then(resultado => {
+        console.log("RES:: ", resultado);
+        if (resultado) {
+          resultado.forEach((element: { _id: string; nombre: string; copias: number; copiasDisponibles: number; }) => {
+            this.revistasList.push(new Revista(element._id, element.nombre, element.copias, element.copiasDisponibles));
+          });
+        }
+      }).catch(err => {
+        this.utilService.showErrorMessage(err);
+      });
+  }
+  
+
+  editarRevista(revista: Revista){
+    this.router.navigate([
+      '/revistas',
+      {
+        outlets: {
+          outletEditarRevista:
+            ['editar-revista', revista._id]
+        }
+      }]);
+  }
+
+  eliminarRevista(revista: Revista){
+    this.router.navigate([
+      '/revistas',
+      {
+        outlets: {
+          outletEliminarRevista:
+            ['eliminar-revista', revista._id, revista.nombre]
+        }
+      }]);
   }
 
   prb(){

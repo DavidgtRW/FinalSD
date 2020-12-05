@@ -1,0 +1,72 @@
+<router-outlet name="outletReservarLibro"></router-outlet>
+<div class="container mt-5">
+    <div class="justify-content-center d-flex">
+        <h5 class="title font-weight-bold ">Reservar Libros</h5>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <div class="justify-content-center d-flex">
+            <h5 class="title font-weight-bold ">Miembros Personal</h5>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">
+                        <div (click)="prb()"><i class="fa fa-filter font-big" aria-hidden="true">
+                            </i>Nombre
+                        </div>
+                    </th>
+                    <th scope="col" class="col-2 text-right" style="width: 20%">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let miembro of miembrosPersonalList; index as i">
+                    <td class="text-center">{{miembro.nombre}}</td>
+                    <td class="text-right col-2" style="width: 20%">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <div>
+                                <button class="btn btn-danger" (click)="reservarLibroPersonal(miembro)">
+                                    Confirmar </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="justify-content-center d-flex top-buffer">
+            <h5 class="title font-weight-bold ">Miembros Biblioteca</h5>
+        </div>
+
+        <table class="table table-striped ">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">
+                        <div (click)="prb()"><i class="fa fa-filter font-big" aria-hidden="true">
+                            </i>Nombre
+                        </div>
+
+                    <th scope="col" class="col-2 text-right" style="width: 20%">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let miembro of miembrosBibliotecaList; index as i">
+                    <td class="text-center">{{miembro.nombre}}</td>
+                    <td class="text-right col-2" style="width: 20%">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <div>
+                                <button class="btn btn-danger" (click)="reservarLibroBiblioteca(miembro)">
+                                    Confirmar </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

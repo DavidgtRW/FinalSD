@@ -1,27 +1,85 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Libro } from 'src/model/libro';
+import { BibliotecaService } from '../service/biblioteca.service';
+import { ConfiguracionAccionsService } from '../service/configuracion-accions.service';
+import { UtilsService } from '../service/utils.service';
 
 @Component({
   selector: 'app-libros',
   templateUrl: './libros.component.html',
   styleUrls: ['./libros.component.css']
 })
-export class LibrosComponent implements OnInit {
+export class LibrosComponent implements OnInit, OnDestroy {
 
-  librosList: Libro [] = [
-    new Libro('1', 'libro1', 3, 3),
-    new Libro('2', 'libro2', 4, 4),
-    new Libro('3', 'libro3', 2, 2),
-    new Libro('4', 'libro4', 1, 1)
-  ];
+  librosList: Libro[] = [];
 
-  constructor() { }
+  private suscripcion: Subscription = new Subscription();
+  
+  constructor(
+    private utilService: UtilsService,
+    private bibliotecaService: BibliotecaService,
+    private configuracionAccionService: ConfiguracionAccionsService,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
+
+    this.cargarLibros();
+    this.suscripcion = this.configuracionAccionService.libroActual.subscribe((result) => {
+      console.log(result);
+      if (result) {
+        this.cargarLibros();
+        this.configuracionAccionService.actualizarListaLibros(false);
+      }
+    });
   }
 
-  prb(){
-    
+  ngOnDestroy(): void {
+    this.suscripcion.unsubscribe();
+  }
+
+  
+  cargarLibros(){
+    this.librosList = [];
+    this.bibliotecaService.getServices("libros")
+      .then(resultado => {
+        console.log("RES:: ", resultado);
+        if (resultado) {
+          resultado.forEach((element: { _id: string; nombre: string; copias: number; copiasDisponibles: number; }) => {
+            this.librosList.push(new Libro(element._id, element.nombre, element.copias, element.copiasDisponibles));
+          });
+        }
+      }).catch(err => {
+        this.utilService.showErrorMessage(err);
+      });
+  }
+
+  editarLibro(libro: Libro){
+    this.router.navigate([
+      '/libros',
+      {
+        outlets: {
+          outletEditarLibro:
+            ['editar-libro', libro._id]
+        }
+      }]);
+  }
+
+  eliminarLibro(libro: Libro){
+    this.router.navigate([
+      '/libros',
+      {
+        outlets: {
+          outletEliminarLibro:
+            ['eliminar-libro', libro._id, libro.nombre]
+        }
+      }]);
+  }
+
+  prb() {
+
   }
 
 }
