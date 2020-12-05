@@ -2,7 +2,7 @@
     <div class="background-popup"></div>
     <div class="pop-up coord-modal-full px-5 py-4 modal-scroll">
         <div class="modal-header color-red">
-            <h5 class="modal-title font-white">Reservar Libro</h5>
+            <h5 class="modal-title font-white">Reservar Revista</h5>
             <div>
                 <button backHistory type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="fa fa-times font-white" aria-hidden="true"></i>
@@ -11,29 +11,32 @@
         </div>
 
         <div class="container">
+            <div class="top-buffer mb-5">
+                <h5 class="modal-title font-white">Miembro: {{nombreMiembro}}</h5>
+            </div>
             <div class="table-wrapper-scroll-y my-custom-scrollbar">
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">
-                                <div (click)="prb()"><i class="fa fa-filter font-big" aria-hidden="true">
+                                <div (click)="aplicarFiltrarNombreRevista()"><i class="fa fa-filter font-big" aria-hidden="true">
                                     </i>Revista
                                 </div>
-                                <!-- <div *ngIf="filtrarNombreCoordinador==true">
-                                    <input type="search" [(ngModel)]="filtroNombreCoordinador"
+                                <div *ngIf="filtrarNombreLibro==true">
+                                    <input type="search" [(ngModel)]="filtroNombreLibro"
                                         [ngModelOptions]="{standalone: true}"
                                         class="form-control ds-input mb-2 w-75 floatright-"
                                         placeholder="Buscar por nombre" autocomplete="off" spellcheck="false"
                                         aria-autocomplete="list" aria-expanded="false"
                                         aria-owns="algolia-autocomplete-listbox-0" dir="auto">
-                                </div> -->
+                                </div>
                             </th>
                             <th scope="col" class="col-2 text-right" style="width: 20%">
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let revista of revistasList; index as i">
+                        <tr *ngFor="let revista of revistasList | filterPipe:'nombre':filtroNombreLibro; index as i">
                             <td class="text-center">{{revista.nombre}}</td>
                             <td class="text-right col-2" style="width: 20%">
                                 <div class="d-flex justify-content-end align-items-center">

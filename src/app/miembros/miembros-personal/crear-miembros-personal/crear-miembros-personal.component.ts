@@ -12,7 +12,7 @@ import { MiembroPersonal } from 'src/model/miembro-personal';
 })
 export class CrearMiembrosPersonalComponent implements OnInit {
 
-  miembro: MiembroPersonal = new MiembroPersonal('', '', 0, 0);
+  miembro: MiembroPersonal = new MiembroPersonal('', '', '', '');
 
   constructor(
     private utilService: UtilsService,
@@ -45,7 +45,7 @@ export class CrearMiembrosPersonalComponent implements OnInit {
   }
 
   nuevoMiembro() {
-    this.miembro = new MiembroPersonal('', '', 0, 0);
+    this.miembro = new MiembroPersonal('', '', '', '');
   }
 
   actualizarMiembros() {

@@ -15,8 +15,14 @@
             <thead>
                 <tr>
                     <th scope="col" class="text-center">
-                        <div (click)="prb()"><i class="fa fa-filter font-big" aria-hidden="true">
+                        <div (click)="aplicarFiltrarNombreMiembroPersonal()"><i class="fa fa-filter font-big" aria-hidden="true">
                             </i>Nombre
+                        </div>
+                        <div *ngIf="filtrarNombreMiembroPersonal==true">
+                            <input type="search" [(ngModel)]="filtroNombreMiembroPersonal" [ngModelOptions]="{standalone: true}"
+                                class="form-control ds-input mb-2 w-75 float-right" placeholder="Buscar por nombre"
+                                autocomplete="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false"
+                                aria-owns="algolia-autocomplete-listbox-0" dir="auto">
                         </div>
                     </th>
                     <th scope="col" class="col-2 text-right" style="width: 20%">
@@ -24,7 +30,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let miembro of miembrosPersonalList; index as i">
+                <tr *ngFor="let miembro of miembrosPersonalList | filterPipe:'nombre':filtroNombreMiembroPersonal; index as i">
                     <td class="text-center">{{miembro.nombre}}</td>
                     <td class="text-right col-2" style="width: 20%">
                         <div class="d-flex justify-content-end align-items-center">

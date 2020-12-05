@@ -3,19 +3,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BibliotecaService } from 'src/app/service/biblioteca.service';
 import { ConfiguracionAccionsService } from 'src/app/service/configuracion-accions.service';
 import { UtilsService } from 'src/app/service/utils.service';
-import { Revista } from 'src/model/revista';
+import { Libro } from 'src/model/libro';
 import { ReservaLibro } from 'src/model/reserva-libro';
 
 @Component({
-  selector: 'app-confirmar-revista',
-  templateUrl: './confirmar-revista.component.html',
-  styleUrls: ['./confirmar-revista.component.css']
+  selector: 'app-confirmar-libro-personal',
+  templateUrl: './confirmar-libro-personal.component.html',
+  styleUrls: ['./confirmar-libro-personal.component.css']
 })
-export class ConfirmarRevistaComponent implements OnInit {
+export class ConfirmarLibroPersonalComponent implements OnInit {
 
-  revistasList: Revista [] = [];
   reservaLibro: ReservaLibro = new ReservaLibro('1', '', '');
   nombreMiembro: string = '';
+
+  librosList: Libro[] = [];
 
   //Filtros
   filtrarNombreLibro = false;
@@ -31,7 +32,7 @@ export class ConfirmarRevistaComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.cargarRevistas();
+    this.cargarLibros();
     this.activedRoute.params.subscribe(param => {
       if ("id" in param && "nombre") {
 
@@ -42,30 +43,27 @@ export class ConfirmarRevistaComponent implements OnInit {
     });
   }
 
-  cargarRevistas(){
-    this.revistasList = [];
-    this.bibliotecaService.getServices("revistas")
+  cargarLibros() {
+    this.librosList = [];
+    this.bibliotecaService.getServices("libros")
       .then(resultado => {
         console.log("RES:: ", resultado);
         if (resultado) {
           resultado.forEach((element: { _id: string; nombre: string; copias: number; copiasDisponibles: number; }) => {
-            this.revistasList.push(new Revista(element._id, element.nombre, element.copias, element.copiasDisponibles));
+            this.librosList.push(new Libro(element._id, element.nombre, element.copias, element.copiasDisponibles));
           });
+          //this.cargarMiembrosPersonal();
         }
       }).catch(err => {
         this.utilService.showErrorMessage(err);
       });
   }
 
-  aplicarFiltrarNombreRevista() {
-    this.filtrarNombreLibro = !this.filtrarNombreLibro;
-  }
+  reservarLibro(libro: Libro) {
 
-  reservarRevista(revista: Revista){
-
-    this.reservaLibro.id = revista._id;
+    this.reservaLibro.id = libro._id;
     console.log(this.reservaLibro);
-    this.bibliotecaService.postServices('reservar/revista-personal', this.reservaLibro)
+    this.bibliotecaService.postServices('reservar/libro-personal', this.reservaLibro)
       .then(resultado => {
         console.log("RES2:: ", resultado);
         if (resultado) {
@@ -80,9 +78,15 @@ export class ConfirmarRevistaComponent implements OnInit {
 
   nuevoMiembro(){
     this.reservaLibro = new ReservaLibro('1', '', '');
-  } 
-
+  }  
+  
   regresarAdministrarMiembros(){
-    this.router.navigate(['/reservar-revista']);
+    this.router.navigate(['/reservar-libro']);
   }
+
+  aplicarFiltrarNombreLibro() {
+    this.filtrarNombreLibro = !this.filtrarNombreLibro;
+  }
+
+
 }

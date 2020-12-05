@@ -16,6 +16,14 @@ export class LibrosComponent implements OnInit, OnDestroy {
   librosList: Libro[] = [];
 
   private suscripcion: Subscription = new Subscription();
+
+  //Filtros
+  filtrarNombreLibro = false;
+  filtroNombreLibro: any;
+  filtrarCopiasLibro = false;
+  filtroCopiasLibro: any;
+  filtrarDisponibleLibro = false;
+  filtroDisponibleLibro: any;
   
   constructor(
     private utilService: UtilsService,
@@ -78,8 +86,14 @@ export class LibrosComponent implements OnInit, OnDestroy {
       }]);
   }
 
-  prb() {
-
+  aplicarFiltrarNombreLibro() {
+    this.filtrarNombreLibro = !this.filtrarNombreLibro;
+  }
+  aplicarFiltrarCopiaLibro() {
+    this.filtrarCopiasLibro = !this.filtrarCopiasLibro;
+  }
+  aplicarFiltrarDisponibleLibro() {
+    this.filtrarDisponibleLibro = !this.filtrarDisponibleLibro;
   }
 
 }

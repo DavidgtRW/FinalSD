@@ -28,6 +28,10 @@ import { CrearMiembrosPersonalComponent } from './miembros/miembros-personal/cre
 import { EliminarMiembrosPersonalComponent } from './miembros/miembros-personal/eliminar-miembros-personal/eliminar-miembros-personal.component';
 import { ConfirmarLibroComponent } from './reservas/reservar-libro/confirmar-libro/confirmar-libro.component';
 import { ConfirmarRevistaComponent } from './reservas/reservar-revista/confirmar-revista/confirmar-revista.component';
+import { ConfirmarLibroPersonalComponent } from './reservas/reservar-libro/confirmar-libro-personal/confirmar-libro-personal.component';
+import { ConsultarLibroComponent } from './miembros/miembros-biblioteca/consultar-libro/consultar-libro.component';
+import { ConsultarLibroComponentAux } from './miembros/miembros-personal/consultar-libro/consultar-libro.component';
+import { ConsultarRevistaComponent } from './miembros/miembros-personal/consultar-revista/consultar-revista.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +56,11 @@ import { ConfirmarRevistaComponent } from './reservas/reservar-revista/confirmar
     CrearMiembrosPersonalComponent,
     EliminarMiembrosPersonalComponent,
     ConfirmarLibroComponent,
-    ConfirmarRevistaComponent
+    ConfirmarRevistaComponent,
+    ConfirmarLibroPersonalComponent,
+    ConsultarLibroComponent,
+    ConsultarRevistaComponent,
+    ConsultarLibroComponentAux
   ],
   imports: [
     BrowserModule,

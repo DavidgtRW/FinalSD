@@ -16,6 +16,12 @@ export class MiembrosBibliotecaComponent implements OnInit, OnDestroy  {
   miembrosList: MiembroBiblioteca [] = [];
   private suscripcion: Subscription = new Subscription();
 
+  //Filtros
+  filtrarNombreMiembro = false;
+  filtroNombreMiembro: any;
+  filtrarMiembroLibro = false;
+  filtroMiembroLibro: any;
+
   constructor(
     private utilService: UtilsService,
     private bibliotecaService: BibliotecaService,
@@ -44,8 +50,8 @@ export class MiembrosBibliotecaComponent implements OnInit, OnDestroy  {
       .then(resultado => {
         console.log("RES:: ", resultado);
         if (resultado) {
-          resultado.forEach((element: { _id: string; nombre: string; copiasLibro: string | number; }) => {
-            this.miembrosList.push(new MiembroBiblioteca(element._id, element.nombre, +element.copiasLibro));
+          resultado.forEach((element: { _id: string; nombre: string; copiasLibro: string; }) => {
+            this.miembrosList.push(new MiembroBiblioteca(element._id, element.nombre, element.copiasLibro));
           });
         }
       }).catch(err => {
@@ -59,13 +65,27 @@ export class MiembrosBibliotecaComponent implements OnInit, OnDestroy  {
       {
         outlets: {
           outletEliminarMiembrosBiblioteca:
-            ['eliminar-revista', miembro._id, miembro.nombre]
+            ['eliminar-miembros-biblioteca', miembro._id, miembro.nombre]
         }
       }]);
   }
 
-  prb(){
-    
+  consultarInfoLibro(miembro: MiembroBiblioteca){
+    this.router.navigate([
+      '/miembro-biblioteca',
+      {
+        outlets: {
+          outletConsultarLibroMiembrosBiblioteca:
+            ['consultar-libro-biblioteca', miembro.copiasLibro]
+        }
+      }]);
+  }
+
+  aplicarFiltrarNombreMiembro() {
+    this.filtrarNombreMiembro = !this.filtrarNombreMiembro;
+  }
+  aplicarFiltrarMiembroLibro() {
+    this.filtrarMiembroLibro = !this.filtrarMiembroLibro;
   }
 
 }

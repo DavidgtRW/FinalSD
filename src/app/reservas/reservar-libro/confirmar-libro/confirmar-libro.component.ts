@@ -22,6 +22,11 @@ export class ConfirmarLibroComponent implements OnInit {
 
   librosList: Libro[] = [];
 
+  //Filtros
+  filtrarNombreLibro = false;
+  filtroNombreLibro: any;
+  
+
 
   constructor(
     private utilService: UtilsService,
@@ -60,23 +65,21 @@ export class ConfirmarLibroComponent implements OnInit {
       });
   }
 
-  prb() { }
-
   reservarLibro(libro: Libro) {
 
     this.reservaLibro.id = libro._id;
     console.log(this.reservaLibro);
-    // this.bibliotecaService.postServices('personal/new-personal', this.reservaLibro)
-    //   .then(resultado => {
-    //     console.log("RES2:: ", resultado);
-    //     if (resultado) {
-    //       console.log("RES3:: ");
+    this.bibliotecaService.postServices('reservar/libro-mienbro', this.reservaLibro)
+      .then(resultado => {
+        console.log("RES2:: ", resultado);
+        if (resultado) {
+          console.log("RES3:: ");
           this.nuevoMiembro();
           this.regresarAdministrarMiembros();
-      //   }
-      // }).catch(err => {
-      //   this.utilService.showErrorMessage(err);
-      // });
+        }
+      }).catch(err => {
+        this.utilService.showErrorMessage(err);
+      });
   }
 
   nuevoMiembro(){
@@ -87,5 +90,8 @@ export class ConfirmarLibroComponent implements OnInit {
     this.router.navigate(['/reservar-libro']);
   }
 
+  aplicarFiltrarNombreLibro() {
+    this.filtrarNombreLibro = !this.filtrarNombreLibro;
+  }
 
 }

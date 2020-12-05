@@ -16,6 +16,14 @@ export class MiembrosPersonalComponent implements OnInit, OnDestroy {
   miembrosList: MiembroPersonal [] = [];
   private suscripcion: Subscription = new Subscription();
 
+  //filtros
+  filtrarNombreMiembro = false;
+  filtroNombreMiembro: any;
+  filtrarMiembroLibro = false;
+  filtroMiembroLibro: any;
+  filtrarMiembroRevista = false;
+  filtroMiembroRevista: any;
+
   constructor(
     private utilService: UtilsService,
     private bibliotecaService: BibliotecaService,
@@ -44,8 +52,8 @@ export class MiembrosPersonalComponent implements OnInit, OnDestroy {
       .then(resultado => {
         console.log("RES:: ", resultado);
         if (resultado) {
-          resultado.forEach((element: { _id: string; nombre: string; copiasLibro: string | number; copiasRevistas: string | number;}) => {
-            this.miembrosList.push(new MiembroPersonal(element._id, element.nombre, +element.copiasLibro, +element.copiasRevistas));
+          resultado.forEach((element: { _id: string; nombre: string; copiasLibro: string; copiasRevistas: string;}) => {
+            this.miembrosList.push(new MiembroPersonal(element._id, element.nombre, element.copiasLibro, element.copiasRevistas));
           });
         }
       }).catch(err => {
@@ -64,8 +72,37 @@ export class MiembrosPersonalComponent implements OnInit, OnDestroy {
       }]);
   }
 
-  prb(){
-    
+  aplicarFiltrarNombreMiembro() {
+    this.filtrarNombreMiembro = !this.filtrarNombreMiembro;
   }
+  aplicarFiltrarMiembroLibro() {
+    this.filtrarMiembroLibro = !this.filtrarMiembroLibro;
+  }
+  aplicarFiltrarMiembroRevista() {
+    this.filtrarMiembroRevista = !this.filtrarMiembroRevista;
+  }
+  
+  consultarInfoLibro(miembro: MiembroPersonal){
+    this.router.navigate([
+      '/miembro-personal',
+      {
+        outlets: {
+          outletConsultarLibroMiembrosPersonal:
+            ['consultar-libro-personal', miembro.copiasLibro]
+        }
+      }]);
+  }
+
+  consultarInfoRevista(miembro: MiembroPersonal){
+    this.router.navigate([
+      '/miembro-personal',
+      {
+        outlets: {
+          outletConsultarRevistaMiembrosPersonal:
+            ['consultar-revista-personal', miembro.copiasRevistas]
+        }
+      }]);
+  }
+  
 
 }

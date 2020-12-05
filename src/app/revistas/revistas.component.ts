@@ -17,6 +17,14 @@ export class RevistasComponent implements OnInit, OnDestroy {
   
   revistasList: Revista [] = [];
 
+  //Filtros
+  filtrarNombreLibro = false;
+  filtroNombreLibro: any;
+  filtrarCopiasLibro = false;
+  filtroCopiasLibro: any;
+  filtrarDisponibleLibro = false;
+  filtroDisponibleLibro: any;
+
   constructor(
     private utilService: UtilsService,
     private bibliotecaService: BibliotecaService,
@@ -78,8 +86,14 @@ export class RevistasComponent implements OnInit, OnDestroy {
       }]);
   }
 
-  prb(){
-    
+  aplicarFiltrarNombreLibro() {
+    this.filtrarNombreLibro = !this.filtrarNombreLibro;
+  }
+  aplicarFiltrarCopiaLibro() {
+    this.filtrarCopiasLibro = !this.filtrarCopiasLibro;
+  }
+  aplicarFiltrarDisponibleLibro() {
+    this.filtrarDisponibleLibro = !this.filtrarDisponibleLibro;
   }
 
 }

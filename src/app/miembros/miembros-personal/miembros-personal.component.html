@@ -1,5 +1,7 @@
 <router-outlet name="outletCrearMiembrosPersonal"></router-outlet>
 <router-outlet name="outletEliminarMiembrosPersonal"></router-outlet>
+<router-outlet name="outletConsultarLibroMiembrosPersonal"></router-outlet>
+<router-outlet name="outletConsultarRevistaMiembrosPersonal"></router-outlet>
 <div class="container mt-5">
     <div class="justify-content-center d-flex">
             <h5 class="title font-weight-bold ">Miembros Personal</h5>
@@ -11,61 +13,47 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <!-- <th scope="col" class="text-center">
-                        <div (click)="prb()"><i class="fa fa-filter font-big"
-                                aria-hidden="true">
-                            </i>Id Libro
-                        </div> -->
-                        <!-- <div *ngIf="filtrarIdCoordinador==true">
-                            <input type="search" [(ngModel)]="filtroIdCoordinador"
-                                [ngModelOptions]="{standalone: true}"
-                                class="form-control ds-input mb-2 w-75 floatright-"
-                                placeholder="Buscar por nombre" autocomplete="off" spellcheck="false"
-                                aria-autocomplete="list" aria-expanded="false"
-                                aria-owns="algolia-autocomplete-listbox-0" dir="auto">
-                        </div> -->
-                    <!-- </th> -->
                     <th scope="col" class="text-center">
-                        <div (click)="prb()"><i
+                        <div (click)="aplicarFiltrarNombreMiembro()"><i
                                 class="fa fa-filter font-big" aria-hidden="true">
                             </i>Nombre
                         </div>
-                        <!-- <div *ngIf="filtrarNombreCoordinador==true">
-                            <input type="search" [(ngModel)]="filtroNombreCoordinador"
+                        <div *ngIf="filtrarNombreMiembro==true">
+                            <input type="search" [(ngModel)]="filtroNombreMiembro"
                                 [ngModelOptions]="{standalone: true}"
                                 class="form-control ds-input mb-2 w-75 floatright-"
-                                placeholder="Buscar por nombre" autocomplete="off" spellcheck="false"
+                                placeholder="Buscar" autocomplete="off" spellcheck="false"
                                 aria-autocomplete="list" aria-expanded="false"
                                 aria-owns="algolia-autocomplete-listbox-0" dir="auto">
-                        </div> -->
+                        </div>
                     </th>
                     <th scope="col" class="text-center">
-                        <div (click)="prb()"><i
+                        <div (click)="aplicarFiltrarMiembroLibro()"><i
                                 class="fa fa-filter font-big" aria-hidden="true">
                             </i>Libro
                         </div>
-                        <!-- <div *ngIf="filtrarNombreCoordinador==true">
-                            <input type="search" [(ngModel)]="filtroNombreCoordinador"
+                        <div *ngIf="filtrarMiembroLibro==true">
+                            <input type="search" [(ngModel)]="filtroMiembroLibro"
                                 [ngModelOptions]="{standalone: true}"
                                 class="form-control ds-input mb-2 w-75 floatright-"
-                                placeholder="Buscar por nombre" autocomplete="off" spellcheck="false"
+                                placeholder="Buscar" autocomplete="off" spellcheck="false"
                                 aria-autocomplete="list" aria-expanded="false"
                                 aria-owns="algolia-autocomplete-listbox-0" dir="auto">
-                        </div> -->
+                        </div>
                     </th>
                     <th scope="col" class="text-center">
-                        <div (click)="prb()"><i
+                        <div (click)="aplicarFiltrarMiembroRevista()"><i
                                 class="fa fa-filter font-big" aria-hidden="true">
                             </i>Revista
                         </div>
-                        <!-- <div *ngIf="filtrarNombreCoordinador==true">
-                            <input type="search" [(ngModel)]="filtroNombreCoordinador"
+                        <div *ngIf="filtrarMiembroRevista==true">
+                            <input type="search" [(ngModel)]="filtroMiembroRevista"
                                 [ngModelOptions]="{standalone: true}"
                                 class="form-control ds-input mb-2 w-75 floatright-"
-                                placeholder="Buscar por nombre" autocomplete="off" spellcheck="false"
+                                placeholder="Buscar" autocomplete="off" spellcheck="false"
                                 aria-autocomplete="list" aria-expanded="false"
                                 aria-owns="algolia-autocomplete-listbox-0" dir="auto">
-                        </div> -->
+                        </div>
                     </th>
                     <th scope="col" class="col-2 text-right" style="width: 20%">
                         <div class="d-flex justify-content-end align-items-center">
@@ -76,10 +64,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let miembro of miembrosList; index as i">
+                <tr *ngFor="let miembro of miembrosList | filterPipe:'nombre':filtroNombreMiembro  
+                | filterPipe:'copiasLibro':filtroMiembroLibro | filterPipe:'copiasRevistas':filtroMiembroRevista; index as i">
                     <td class="text-center">{{miembro.nombre}}</td>
-                    <td class="text-center">{{miembro.copiasLibro}}</td>
-                    <td class="text-center">{{miembro.copiasRevistas}}</td>
+                    <td class="text-center cursor text-decoration" (click)="consultarInfoLibro(miembro)" >{{miembro.copiasLibro}}</td>
+                    <td class="text-center cursor text-decoration" (click)="consultarInfoRevista(miembro)">{{miembro.copiasRevistas}}</td>
                     <td class="text-right col-2" style="width: 20%">
                         <div class="d-flex justify-content-end align-items-center">
                             <div>

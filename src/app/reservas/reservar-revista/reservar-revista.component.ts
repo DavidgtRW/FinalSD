@@ -16,6 +16,11 @@ export class ReservarRevistaComponent implements OnInit {
 
   revistasList: Revista [] = [];
 
+  //Filtros
+  filtrarNombreMiembroPersonal = false;
+  filtroNombreMiembroPersonal: any;
+  
+
   miembrosPersonalList: MiembroPersonal [] = [];
   
   constructor(
@@ -29,8 +34,8 @@ export class ReservarRevistaComponent implements OnInit {
     this.cargarMiembrosPersonal();
   }
 
-  prb(){
-    
+  aplicarFiltrarNombreMiembroPersonal() {
+    this.filtrarNombreMiembroPersonal = !this.filtrarNombreMiembroPersonal;
   }
 
   cargarMiembrosPersonal(){
@@ -39,8 +44,8 @@ export class ReservarRevistaComponent implements OnInit {
       .then(resultado => {
         console.log("RES:: ", resultado);
         if (resultado) {
-          resultado.forEach((element: { _id: string; nombre: string; copiasLibro: string | number; copiasRevistas: string | number;}) => {
-            this.miembrosPersonalList.push(new MiembroPersonal(element._id, element.nombre, +element.copiasLibro, +element.copiasRevistas));
+          resultado.forEach((element: { _id: string; nombre: string; copiasLibro: string; copiasRevistas: string;}) => {
+            this.miembrosPersonalList.push(new MiembroPersonal(element._id, element.nombre, element.copiasLibro, element.copiasRevistas));
           });
         }
       }).catch(err => {

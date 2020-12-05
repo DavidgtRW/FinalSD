@@ -22,6 +22,12 @@ export class ReservarLibroComponent implements OnInit, OnDestroy {
 
   private suscripcion: Subscription = new Subscription();
 
+  //Filtros
+  filtrarNombreMiembroBiblioteca = false;
+  filtroNombreMiembroBiblioteca: any;
+  filtrarNombreMiembroPersonal = false;
+  filtroNombreMiembroPersonal: any;
+
   constructor(
     private utilService: UtilsService,
     private bibliotecaService: BibliotecaService,
@@ -44,8 +50,8 @@ export class ReservarLibroComponent implements OnInit, OnDestroy {
       .then(resultado => {
         console.log("RES:: ", resultado);
         if (resultado) {
-          resultado.forEach((element: { _id: string; nombre: string; copiasLibro: string | number; copiasRevistas: string | number;}) => {
-            this.miembrosPersonalList.push(new MiembroPersonal(element._id, element.nombre, +element.copiasLibro, +element.copiasRevistas));
+          resultado.forEach((element: { _id: string; nombre: string; copiasLibro: string; copiasRevistas: string;}) => {
+            this.miembrosPersonalList.push(new MiembroPersonal(element._id, element.nombre, element.copiasLibro, element.copiasRevistas));
           });
         }
       }).catch(err => {
@@ -59,8 +65,8 @@ export class ReservarLibroComponent implements OnInit, OnDestroy {
       .then(resultado => {
         console.log("RES:: ", resultado);
         if (resultado) {
-          resultado.forEach((element: { _id: string; nombre: string; copiasLibro: string | number; }) => {
-            this.miembrosBibliotecaList.push(new MiembroBiblioteca(element._id, element.nombre, +element.copiasLibro));
+          resultado.forEach((element: { _id: string; nombre: string; copiasLibro: string; }) => {
+            this.miembrosBibliotecaList.push(new MiembroBiblioteca(element._id, element.nombre, element.copiasLibro));
           });
         }
       }).catch(err => {
@@ -69,8 +75,14 @@ export class ReservarLibroComponent implements OnInit, OnDestroy {
   }
 
 
-  prb() {
+ 
 
+  aplicarFiltrarNombreMiembroBiblioteca() {
+    this.filtrarNombreMiembroBiblioteca = !this.filtrarNombreMiembroBiblioteca;
+  }
+
+  aplicarFiltrarNombreMiembroPersonal() {
+    this.filtrarNombreMiembroPersonal = !this.filtrarNombreMiembroPersonal;
   }
 
   reservarLibroPersonal(miembro: MiembroPersonal){
@@ -78,8 +90,8 @@ export class ReservarLibroComponent implements OnInit, OnDestroy {
       '/reservar-libro',
       {
         outlets: {
-          outletReservarLibro:
-            ['confirmar-libro', miembro._id, miembro.nombre]
+          outletReservarLibroPresonal:
+            ['confirmar-libro-personal', miembro._id, miembro.nombre]
         }
       }]);
   }

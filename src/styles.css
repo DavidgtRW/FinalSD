@@ -82,3 +82,29 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .table-wrapper-scroll-y {
 	display: block;
 }
+
+footer {
+    position: relative;
+    height: 150px;
+    width: 100%;
+    background-color: #333333;
+}
+
+p.copyright {
+    position: absolute;
+    width: 100%;
+    color: #fff;
+    line-height: 40px;
+    font-size: 0.7em;
+    text-align: center;
+    bottom:0;
+}
+
+p.copyrightAux {
+    position: absolute;
+    width: 100%;
+    color: #fff;
+    line-height: 40px;
+    font-size: 0.7em;
+    text-align: center;
+}

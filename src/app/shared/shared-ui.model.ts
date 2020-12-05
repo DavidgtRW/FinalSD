@@ -4,10 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BackHistory } from '../directives/back-history.directive';
 import { ClickOutsideModule } from 'ng-click-outside';
+import { FilterPipe } from 'src/app/pipes/filter.pipe';
 
 @NgModule({
   declarations: [
     BackHistory,
+    FilterPipe,
   ],
   imports: [
     CommonModule,
@@ -22,6 +24,7 @@ import { ClickOutsideModule } from 'ng-click-outside';
     ReactiveFormsModule,
     NgbModule,
     ClickOutsideModule,
+    FilterPipe,
   ]
 })
 export class SharedUiModule { }

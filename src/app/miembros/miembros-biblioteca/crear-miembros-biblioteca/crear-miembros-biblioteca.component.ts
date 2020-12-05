@@ -12,7 +12,7 @@ import { MiembroBiblioteca } from 'src/model/miembro-biblioteca';
 })
 export class CrearMiembrosBibliotecaComponent implements OnInit{
 
-  miembro: MiembroBiblioteca = new MiembroBiblioteca('', '', 0);
+  miembro: MiembroBiblioteca = new MiembroBiblioteca('', '', '  ');
 
   constructor(
     private utilService: UtilsService,
@@ -45,7 +45,7 @@ export class CrearMiembrosBibliotecaComponent implements OnInit{
   }
 
   nuevoMiembro() {
-    this.miembro = new MiembroBiblioteca('','', 0);
+    this.miembro = new MiembroBiblioteca('','', '');
   }
 
   actualizarMiembros() {

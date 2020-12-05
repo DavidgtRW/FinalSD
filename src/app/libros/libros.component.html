@@ -13,43 +13,39 @@
             <thead>
                 <tr>
                     <th scope="col" class="text-center">
-                        <div (click)="prb()"><i class="fa fa-filter font-big" aria-hidden="true">
+                        <div (click)="aplicarFiltrarNombreLibro()"><i class="fa fa-filter font-big" aria-hidden="true">
                             </i>Libro
                         </div>
-                        <!-- <div *ngIf="filtrarNombreCoordinador==true">
-                            <input type="search" [(ngModel)]="filtroNombreCoordinador"
-                                [ngModelOptions]="{standalone: true}"
-                                class="form-control ds-input mb-2 w-75 floatright-"
-                                placeholder="Buscar por nombre" autocomplete="off" spellcheck="false"
-                                aria-autocomplete="list" aria-expanded="false"
+                        <div *ngIf="filtrarNombreLibro==true">
+                            <input type="search" [(ngModel)]="filtroNombreLibro" [ngModelOptions]="{standalone: true}"
+                                class="form-control ds-input mb-2 w-75 floatright-" placeholder="Buscar"
+                                autocomplete="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false"
                                 aria-owns="algolia-autocomplete-listbox-0" dir="auto">
-                        </div> -->
+                        </div>
                     </th>
                     <th scope="col" class="text-center">
-                        <div (click)="prb()"><i class="fa fa-filter font-big" aria-hidden="true">
+                        <div (click)="aplicarFiltrarCopiaLibro()"><i class="fa fa-filter font-big" aria-hidden="true">
                             </i>Copias
                         </div>
-                        <!-- <div *ngIf="filtrarNombreCoordinador==true">
-                            <input type="search" [(ngModel)]="filtroNombreCoordinador"
-                                [ngModelOptions]="{standalone: true}"
-                                class="form-control ds-input mb-2 w-75 floatright-"
-                                placeholder="Buscar por nombre" autocomplete="off" spellcheck="false"
-                                aria-autocomplete="list" aria-expanded="false"
+                        <div *ngIf="filtrarCopiasLibro==true">
+                            <input type="search" [(ngModel)]="filtroCopiasLibro" [ngModelOptions]="{standalone: true}"
+                                class="form-control ds-input mb-2 w-75 floatright-" placeholder="Buscar"
+                                autocomplete="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false"
                                 aria-owns="algolia-autocomplete-listbox-0" dir="auto">
-                        </div> -->
+                        </div>
                     </th>
                     <th scope="col" class="text-center">
-                        <div (click)="prb()"><i class="fa fa-filter font-big" aria-hidden="true">
+                        <div (click)="aplicarFiltrarDisponibleLibro()"><i class="fa fa-filter font-big"
+                                aria-hidden="true">
                             </i>Copias Disponibles
                         </div>
-                        <!-- <div *ngIf="filtrarNombreCoordinador==true">
-                            <input type="search" [(ngModel)]="filtroNombreCoordinador"
+                        <div *ngIf="filtrarDisponibleLibro==true">
+                            <input type="search" [(ngModel)]="filtroDisponibleLibro"
                                 [ngModelOptions]="{standalone: true}"
-                                class="form-control ds-input mb-2 w-75 floatright-"
-                                placeholder="Buscar por nombre" autocomplete="off" spellcheck="false"
-                                aria-autocomplete="list" aria-expanded="false"
+                                class="form-control ds-input mb-2 w-75 floatright-" placeholder="Buscar"
+                                autocomplete="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false"
                                 aria-owns="algolia-autocomplete-listbox-0" dir="auto">
-                        </div> -->
+                        </div>
                     </th>
                     <th scope="col" class="col-2 text-right" style="width: 20%">
                         <div class="d-flex justify-content-end align-items-center">
@@ -60,7 +56,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let libro of librosList; index as i">
+                <tr
+                    *ngFor="let libro of librosList | filterPipe:'nombre':filtroNombreLibro  
+                    | filterPipe:'copias':filtroCopiasLibro | filterPipe:'copiasDisponibles':filtroDisponibleLibro; index as i">
                     <td class="text-center">{{libro.nombre}}</td>
                     <td class="text-center">{{libro.copias}}</td>
                     <td class="text-center">{{libro.copiasDisponibles}}</td>

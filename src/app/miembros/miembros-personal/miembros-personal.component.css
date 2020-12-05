@@ -1,3 +1,11 @@
 .top-buffer {
-    margin-top: 20px;
-  }
+  margin-top: 20px;
+}
+
+td.cursor {
+  cursor: pointer;
+}
+
+td.text-decoration {
+  color: blue;
+}
